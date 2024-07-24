@@ -37,26 +37,24 @@ class ChoiceModel:
         self.embedding_dimension = embedding_dimension
         self._graph = self._load_graph(graph_path)
         self.graph = self._graph.copy()
-        node_embeddings = np.array([node['embedding'] for idx,node in self._graph.nodes(data=True)])
-        index = faiss.IndexFlatL2(self.embedding_dimension)
-        index.add(node_embeddings)
-        ids = np.array([node for node in self._graph.nodes()])
-        self.index = {"index":index, "ids":ids}
-        self.degree_centralities = self._cal_degree_centralities()
+        self.degree_centralities = self._cal_degree_centralities(self._graph)
         self.period = period
+        self.index = self._build_index(self._graph)
         
     def _load_graph(self, graph_path):
         with open(graph_path, "rb") as f:
             G = pickle.load(f)
         return G
     
-    def _load_index(self, index_path):
-        with open("index.pkl", "rb") as f:
-            index = pickle.load(f)
-        return index
+    def _build_index(self, graph):
+        node_embeddings = np.array([node['embedding'] for idx,node in graph.nodes(data=True)])
+        index = faiss.IndexFlatL2(self.embedding_dimension)
+        index.add(node_embeddings)
+        ids = np.array([node for node in graph.nodes()])
+        return {"index":index, "ids":ids}
     
-    def _cal_degree_centralities(self):
-        degree_centralities = nx.degree_centrality(self._graph)
+    def _cal_degree_centralities(self,graph):
+        degree_centralities = nx.degree_centrality(graph)
         return degree_centralities
 
     def get_period(self, period):
@@ -69,7 +67,7 @@ class ChoiceModel:
         self.graph = self._graph.edge_subgraph(related_links).copy()
         self.period = period
 
-    def similarity_search(self,query, k1=5, k2=2,node_type='Actors'):
+    def similarity_search(self,query, k1=10, k2=5,node_type='Actors'):
 
         # step 1: find nodes with similar profile
         def semantic_similarity_search(query, k1):
@@ -105,7 +103,7 @@ class ChoiceModel:
             scores.extend(filtered_scores)
         return nodes,scores
 
-    def link_prediction(self, profile, k1, k2, node_type='Actors', choice_type='Actors', top_k=3):
+    def link_prediction(self, profile, k1=10, k2=5, node_type='Actors', choice_type=None, top_k=None):
 
         def softmax(x):
             e_x = np.exp(x - np.max(x))
@@ -122,19 +120,24 @@ class ChoiceModel:
                 weight_sum += (edge_ap+edge_pc)/2
             return weight_sum/total_neighbors
 
-        def get_recommendation(G,choice_type,top_k=None):
+        def get_recommendation(G,choice_type=None,top_k=None):
             agents = [n for n,d in G.nodes(data=True) if d['type'] == 'Agent']
-            choices = [n for n,d in G.nodes(data=True) if d['type'] == choice_type]
+            if choice_type is None:
+                choices = [n for n,d in G.nodes(data=True) if d['type'] != 'Agent']
+            else:
+                choices = [n for n,d in G.nodes(data=True) if d['type'] == choice_type]
             recommendation = {}
             for choice in choices:
                 recommendation[choice] = cal_weighted_jaccard_coeff(G,agents[0],choice)
             recommendation = {k: v for k, v in sorted(recommendation.items(), key=lambda item: item[1],reverse=True)}
-            choices = list(recommendation.keys())
-            choices = [G.nodes[n] for n in choices]
+            choice_ids = list(recommendation.keys())
+            choices = [G.nodes[n] for n in choice_ids]
             if top_k is None:
                 top_k = len(choices)
             probabilities = softmax(list(recommendation.values())[:top_k]).tolist()
-            return choices,probabilities
+            choices = choices[:top_k]
+            choice_ids = choice_ids[:top_k]
+            return choices,probabilities,choice_ids
 
         # step 1: find nodes with similar profile
         similar_nodes,similar_scores = self.similarity_search(profile, k1, k2, node_type)
@@ -146,15 +149,15 @@ class ChoiceModel:
             neighbors.append(n) 
 
         # step 3: create compute graph
-        compute_graph = nx.subgraph_view(self._graph, filter_node=lambda n: n in neighbors).copy()
+        compute_graph = self._graph.subgraph(neighbors).copy()
         # normalize the weights of links
         weights = nx.get_edge_attributes(compute_graph, 'weight')
         max_weight = max(weights.values())
         for e in compute_graph.edges():
             compute_graph[e[0]][e[1]]['weight'] = compute_graph[e[0]][e[1]]['weight'] / max_weight
         # normalize the weights of similarity scores
-        max_score = max(similar_scores)
-        similar_scores = [s / max_score for s in similar_scores]
+        max_score = round(max(similar_scores),2) + 1e-6
+        similar_scores = [round(s / max_score,2) for s in similar_scores]
 
         #step 4: add agent node
         agent_id = uuid.uuid4().hex
@@ -169,26 +172,27 @@ class ChoiceModel:
             compute_graph.add_edge(agent_id, node, weight=scocre, type='similar_to',label='similar_to') 
         
         # step 5: get recommendation
-        choices,probabilities = get_recommendation(compute_graph,choice_type)
+        choices,probabilities,choice_ids = get_recommendation(compute_graph,choice_type,top_k)
 
-        return choices,probabilities
+        return choices,probabilities,choice_ids
     
-    def choose_from_link_prediction(self, profile, k1, k2, node_type='Actors', choice_type='Actors', top_k=3):
-        choices,probabilities = self.link_prediction(profile, k1, k2, node_type, choice_type, top_k)
+    def choose_from_link_prediction(self, profile, k1=10, k2=5, node_type='Actors', choice_type=None, top_k=None):
+        choices,probabilities,_ = self.link_prediction(profile, k1, k2, node_type, choice_type, top_k)
         choice = np.random.choice(choices, p=probabilities)
         return choice
     
-    def get_old_context(self, profile, k1, k2, node_type='Actors', choice_type='Actors', top_k=3):
-        choices,probabilities = self.link_prediction(profile, k1, k2, node_type, choice_type, top_k)
-        options = [ c['properties'] for c in choices]
+    def get_old_context(self, profile, k1=10, k2=5, node_type='Actors', choice_type=None, top_k=None):
+        choices,probabilities,_ = self.link_prediction(profile, k1, k2, node_type, choice_type, top_k)
+        old_options = [ c['properties'] for c in choices]
         options_probabilities = [ p for p in probabilities]
-        old_context = {f"option:{o}, probability:{p}" for o,p in zip(options,options_probabilities)}
-        return old_context
+        old_context = {f"option:{o}, probability:{p}" for o,p in zip(old_options,options_probabilities)}
+        return old_context,choices
     
-    def get_llm_choice(self,profile, new_options, node_type='Actors', choice_type='Actors', k1=10, k2=5, top_k=3):
+    def get_llm_choice(self,profile, new_options, old_context=None, node_type='Actors', choice_type=None, k1=10, k2=5, top_k=3):
 
-        old_context = self.get_old_context(profile, k1, k2, node_type, choice_type, top_k)
-
+        if not old_context:
+            old_context,old_choices = self.get_old_context(profile, k1, k2, node_type, choice_type, top_k)
+        
         system_propmt = '''
         You are an expert analyst of social networks, given the context of connect propobilities with the similar node in the past, evaluate the possibilities of new options.
         '''
@@ -201,16 +205,16 @@ class ChoiceModel:
         {new_options}
         Is there any possibility for each new option the given node would connect to? 
         Note:
-        - Answer with a list of 'Yes' or 'No' for each new option in json forma, using the index as the key for each option.
+        - Answer with a list of 'Yes' or 'No' for each new option.
         - Wrap the final answer in triple backticks (```json ```) to indicate a json block.
-        - Follw with the reasons for your choice after the json block.
+        - Following with the reasons.
+        - **DO NOT include the reseasons in the json block.**
         Answer Format Example:
         ```json
         {{
-            "0": "Yes",
-            "1": "No"
+        answer: ['Yes','No','Yes'],
+        reasons: ['Reason for choice 1','Reason for choice 2','Reason for choice 3']
         }}
-        [Reasons for the choices]
         ```
         '''
 
