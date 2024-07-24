@@ -59,11 +59,10 @@ class ChoiceModel:
         degree_centralities = nx.degree_centrality(self._graph)
         return degree_centralities
 
-    def set_period(self, period=None):
-        if period:
-            related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] == period]
-            self.graph = self._graph.edge_subgraph(related_links).copy()
-            self.period = period
+    def get_period(self, period):
+        related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] == period]
+        graph = self._graph.edge_subgraph(related_links).copy()
+        return graph
 
     def roll_back(self, period):
         related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] <= period]
