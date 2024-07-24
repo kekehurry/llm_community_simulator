@@ -123,7 +123,7 @@ class ChoiceModel:
                 weight_sum += (edge_ap+edge_pc)/2
             return weight_sum/total_neighbors
 
-        def get_recommendation(G,choice_type,top_k=3):
+        def get_recommendation(G,choice_type,top_k=None):
             agents = [n for n,d in G.nodes(data=True) if d['type'] == 'Agent']
             choices = [n for n,d in G.nodes(data=True) if d['type'] == choice_type]
             recommendation = {}
@@ -132,6 +132,8 @@ class ChoiceModel:
             recommendation = {k: v for k, v in sorted(recommendation.items(), key=lambda item: item[1],reverse=True)}
             choices = list(recommendation.keys())
             choices = [G.nodes[n] for n in choices]
+            if top_k is None:
+                top_k = len(choices)
             probabilities = softmax(list(recommendation.values())[:top_k]).tolist()
             return choices,probabilities
 
@@ -251,7 +253,7 @@ class ChoiceModel:
             if (in_degree + out_degree) == 0:
                 PPI_a = 0
             else:
-                PPI_a = in_degree/(in_degree + out_degree)
+                PPI_a = out_degree/(in_degree + out_degree)
             return PPI_a
     
         def cal_PPI():
@@ -259,7 +261,7 @@ class ChoiceModel:
             return PPI
         
         def cal_CVI():
-            CVI = np.mean([graph.degree(a)/(len(actors)-1) for a in actors])
+            CVI = np.mean([graph.degree(a) for a in actors])
             return CVI
         
         def cal_DCI():
