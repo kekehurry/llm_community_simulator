@@ -3,6 +3,6 @@
 
  # Ollama
 
- ```` ollama pull nomic-embed-text```
+ ``` ollama pull nomic-embed-text ```
 
- ``` ollama pull phi3:instruct```
+ ``` ollama pull llama3.1:latest ```
