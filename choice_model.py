@@ -12,6 +12,7 @@ from langchain_community.chat_models import ChatOllama
 import re
 import json
 import pyvis.network as net
+from tqdm import tqdm
 
 class AnswerOutputParser(StrOutputParser):
     def parse(self, text: str) -> str:
@@ -28,7 +29,7 @@ class ChoiceModel:
     def __init__(self,
         graph_path="community_graph_embeded.pkl",
         embed_model="nomic-embed-text",
-        chat_model="phi3:instruct",
+        chat_model="llama3.1:latest",
         embedding_dimension=768,
         period=9
         ):
@@ -66,6 +67,15 @@ class ChoiceModel:
         related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] <= period]
         self.graph = self._graph.edge_subgraph(related_links).copy()
         self.period = period
+
+    def get_isolated_nodes(self):
+        isolated_nodes = [n for n in self.graph.nodes if self.graph.degree(n)==0]
+        return isolated_nodes
+    
+    def remove_isolated_nodes(self):
+        isolated_nodes = self.get_isolated_nodes()
+        self.graph.remove_nodes_from(isolated_nodes)
+
 
     def similarity_search(self,query, k1=10, k2=5,node_type='Actors'):
 
@@ -244,6 +254,50 @@ class ChoiceModel:
             "new_context": new_options
         })
         return choice, response
+    
+    def predict_links(self, test_graph, new_nodes, save_interval=50, file_name="test_period.pkl"):
+        log_file =  file_name.split('.')[0] + ".csv"
+        self.roll_back(9)
+        data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
+        for node in tqdm(new_nodes):
+            try:
+                profile = self.graph.nodes[node]['properties']
+                node_type = self.graph.nodes[node]['type']
+                test_options = list(test_graph.nodes)
+                test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)))
+                old_context,choices = self.get_old_context(profile=profile, node_type=node_type, k1=10,k2=5, top_k=5)
+                choices = [ c['properties'] for c in choices]
+                # find most silimar options to choices
+                index = self._build_index(test_graph)
+                link_options = []
+                for choice in choices:
+                    query_embed = self.embed_model.embed_query(str(choice))
+                    query_embed = np.array(query_embed).reshape(1,-1)
+                    d, i = index['index'].search(query_embed, 1)
+                    similar_nodes = index['ids'][i][0]
+                    link_options.extend(similar_nodes.tolist())
+                new_options = [test_graph.nodes[n]['properties'] for n in link_options]
+                # ask llm to predict links
+                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=10, k2=5, node_type=node_type,top_k=5)
+                # add edges
+                llm_answer = llm_choice['answer']
+                for answer,id in zip(llm_answer, link_options):
+                    if answer=='Yes':
+                        print("add edge", node, id)
+                        test_graph.add_edge(node, id)
+                data_df.loc[len(data_df)] = [node, profile, choices, new_options,llm_choice, llm_response]
+                if len(data_df) % save_interval == 0:
+                    data_df.to_csv(log_file)
+                    with open(file_name, "wb") as f:
+                        pickle.dump(test_graph, f)
+            except Exception as e:
+                print(e)
+                pass
+        # save the graph
+        with open(file_name, "wb") as f:
+            pickle.dump(test_graph, f)
+        data_df.to_csv(log_file)
+        return test_graph
     
     def evaluate(self,graph=None):
         if graph is None:
