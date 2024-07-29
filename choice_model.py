@@ -43,6 +43,8 @@ class ChoiceModel:
         self.index = self._build_index(self._graph)
         
     def _load_graph(self, graph_path):
+        if graph_path is None:
+            return nx.DiGraph()
         with open(graph_path, "rb") as f:
             G = pickle.load(f)
         return G
@@ -50,7 +52,8 @@ class ChoiceModel:
     def _build_index(self, graph):
         node_embeddings = np.array([node['embedding'] for idx,node in graph.nodes(data=True)])
         index = faiss.IndexFlatL2(self.embedding_dimension)
-        index.add(node_embeddings)
+        if node_embeddings.shape[0] > 0:
+            index.add(node_embeddings)
         ids = np.array([node for node in graph.nodes()])
         return {"index":index, "ids":ids}
     
@@ -265,7 +268,7 @@ class ChoiceModel:
                 node_type = self.graph.nodes[node]['type']
                 test_options = list(test_graph.nodes)
                 test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)))
-                old_context,choices = self.get_old_context(profile=profile, node_type=node_type, k1=10,k2=5, top_k=5)
+                old_context,choices = self.get_old_context(profile=profile, node_type=node_type, k1=10,k2=5, top_k=None)
                 choices = [ c['properties'] for c in choices]
                 # find most silimar options to choices
                 index = self._build_index(test_graph)
@@ -276,15 +279,17 @@ class ChoiceModel:
                     d, i = index['index'].search(query_embed, 1)
                     similar_nodes = index['ids'][i][0]
                     link_options.extend(similar_nodes.tolist())
+                
                 new_options = [test_graph.nodes[n]['properties'] for n in link_options]
                 # ask llm to predict links
-                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=10, k2=5, node_type=node_type,top_k=5)
+                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=10, k2=5, node_type=node_type,top_k=None)
                 # add edges
                 llm_answer = llm_choice['answer']
                 for answer,id in zip(llm_answer, link_options):
                     if answer=='Yes':
-                        print("add edge", node, id)
-                        test_graph.add_edge(node, id)
+                        if not test_graph.has_edge(id, node):
+                            print("add edge", id, node)
+                            test_graph.add_edge(id, node)
                 data_df.loc[len(data_df)] = [node, profile, choices, new_options,llm_choice, llm_response]
                 if len(data_df) % save_interval == 0:
                     data_df.to_csv(log_file)
@@ -322,11 +327,10 @@ class ChoiceModel:
             return CVI
         
         def cal_DCI():
-            degree_centrality = nx.degree_centrality(graph)
-            actors_degree_centrality = [degree_centrality[a] for a in actors]
-            M = np.mean(actors_degree_centrality)
-            IQR = np.percentile(actors_degree_centrality, 75) - np.percentile(actors_degree_centrality, 25)
-            DCI = IQR/M
+            out_degrees = [graph.out_degree(a) for a in actors]
+            MAX = np.max(out_degrees)
+            Q2 = np.percentile(out_degrees, 50)
+            DCI = Q2/MAX
             return DCI
         
         PPI = cal_PPI()
