@@ -258,7 +258,7 @@ class ChoiceModel:
         })
         return choice, response
     
-    def predict_links(self, test_graph, new_nodes, save_interval=50, file_name="test_period.pkl"):
+    def predict_links(self, test_graph, new_nodes, save_interval=50, file_name="test_period.pkl",k1=10,k2=5, top_k=5, period=None):
         log_file =  file_name.split('.')[0] + ".csv"
         self.roll_back(9)
         data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
@@ -266,9 +266,9 @@ class ChoiceModel:
             try:
                 profile = self.graph.nodes[node]['properties']
                 node_type = self.graph.nodes[node]['type']
-                test_options = list(test_graph.nodes)
-                test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)))
-                old_context,choices = self.get_old_context(profile=profile, node_type=node_type, k1=10,k2=5, top_k=None)
+                test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)), 
+                                    label=node_type, period=period)
+                old_context,choices = self.get_old_context(profile=profile, node_type=node_type, k1=k1,k2=k2, top_k=top_k)
                 choices = [ c['properties'] for c in choices]
                 # find most silimar options to choices
                 index = self._build_index(test_graph)
@@ -282,13 +282,13 @@ class ChoiceModel:
                 
                 new_options = [test_graph.nodes[n]['properties'] for n in link_options]
                 # ask llm to predict links
-                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=10, k2=5, node_type=node_type,top_k=None)
+                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,top_k=top_k)
                 # add edges
                 llm_answer = llm_choice['answer']
                 for answer,id in zip(llm_answer, link_options):
                     if answer=='Yes':
                         if not test_graph.has_edge(id, node):
-                            print("add edge", id, node)
+                            # print("add edge", id, node)
                             test_graph.add_edge(id, node)
                 data_df.loc[len(data_df)] = [node, profile, choices, new_options,llm_choice, llm_response]
                 if len(data_df) % save_interval == 0:
@@ -327,9 +327,9 @@ class ChoiceModel:
             return CVI
         
         def cal_DCI():
-            out_degrees = [graph.out_degree(a) for a in actors]
-            MAX = np.max(out_degrees)
-            Q2 = np.percentile(out_degrees, 50)
+            degrees = [graph.degree(a) for a in actors]
+            MAX = np.max(degrees)
+            Q2 = np.percentile(degrees, 50)
             DCI = Q2/MAX
             return DCI
         
