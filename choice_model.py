@@ -280,6 +280,7 @@ class ChoiceModel:
                     similar_nodes = index['ids'][i][0]
                     link_options.extend(similar_nodes.tolist())
                 
+                link_options = list(set(link_options))
                 new_options = [test_graph.nodes[n]['properties'] for n in link_options]
                 # ask llm to predict links
                 llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,top_k=top_k)
