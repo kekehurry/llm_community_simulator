@@ -212,11 +212,11 @@ class ChoiceModel:
         user_prompt = '''
         Given a {node_type} Node with profile:
         {profile}
-        And the context of {top_k} options and their probabilities a similar node connected in the past:
+        And the context of {top_k} options a similar node connected in the past:
         {old_context}
         The new options are:
         {new_options}
-        Is there any possibility for each new option the given node would connect to? 
+        Is there any possibility for each new option that would connect to the given node ? 
         Note:
         - Answer with a list of 'Yes' or 'No' for each new option.
         - Wrap the final answer in triple backticks (```json ```) to indicate a json block.
@@ -266,8 +266,6 @@ class ChoiceModel:
             try:
                 profile = self.graph.nodes[node]['properties']
                 node_type = self.graph.nodes[node]['type']
-                test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)), 
-                                    label=node_type, period=period)
                 old_context,choices = self.get_old_context(profile=profile, node_type=node_type, k1=k1,k2=k2, top_k=top_k)
                 choices = [ c['properties'] for c in choices]
                 # find most silimar options to choices
@@ -286,11 +284,12 @@ class ChoiceModel:
                 llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,top_k=top_k)
                 # add edges
                 llm_answer = llm_choice['answer']
-                for answer,id in zip(llm_answer, link_options):
+                test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)), 
+                                    label=node_type, period=period)
+                for answer,idx in zip(llm_answer, link_options):
                     if answer=='Yes':
-                        if not test_graph.has_edge(id, node):
-                            # print("add edge", id, node)
-                            test_graph.add_edge(id, node)
+                        if not test_graph.has_edge(idx, node):
+                            test_graph.add_edge(idx, node)
                 data_df.loc[len(data_df)] = [node, profile, choices, new_options,llm_choice, llm_response]
                 if len(data_df) % save_interval == 0:
                     data_df.to_csv(log_file)
