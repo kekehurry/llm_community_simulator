@@ -13,6 +13,9 @@ import re
 import json
 import pyvis.network as net
 from tqdm import tqdm
+import random
+
+START_SIZE = 10
 
 class AnswerOutputParser(StrOutputParser):
     def parse(self, text: str) -> str:
@@ -135,10 +138,11 @@ class ChoiceModel:
 
         def get_recommendation(G,choice_type=None,top_k=None):
             agents = [n for n,d in G.nodes(data=True) if d['type'] == 'Agent']
+            # number of organizations is limited
             if choice_type is None:
                 choices = [n for n,d in G.nodes(data=True) if d['type'] != 'Agent']
             else:
-                choices = [n for n,d in G.nodes(data=True) if d['type'] == choice_type]
+                choices = [n for n,d in G.nodes(data=True) if d['type'] in choice_type]
             recommendation = {}
             for choice in choices:
                 recommendation[choice] = cal_weighted_jaccard_coeff(G,agents[0],choice)
@@ -258,7 +262,7 @@ class ChoiceModel:
         })
         return choice, response
     
-    def predict_links(self, test_graph, new_nodes, save_interval=50, file_name="test_period.pkl",k1=10,k2=5, top_k=5, period=None):
+    def predict_links(self, test_graph, new_nodes, save_interval=50, file_name="test_period.pkl",k1=10,k2=5, top_k=5, choice_type=None, period=None):
         log_file =  file_name.split('.')[0] + ".csv"
         self.roll_back(9)
         data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
@@ -281,15 +285,22 @@ class ChoiceModel:
                 link_options = list(set(link_options))
                 new_options = [test_graph.nodes[n]['properties'] for n in link_options]
                 # ask llm to predict links
-                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,top_k=top_k)
+                llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,choice_type=choice_type, top_k=top_k)
                 # add edges
                 llm_answer = llm_choice['answer']
                 test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)), 
                                     label=node_type, period=period)
                 for answer,idx in zip(llm_answer, link_options):
-                    if answer=='Yes':
-                        if not test_graph.has_edge(idx, node):
-                            test_graph.add_edge(idx, node)
+                    if answer=='Yes' and (not test_graph.has_edge(idx, node)):
+                        if test_graph.nodes[idx]['type'] in ["Organization","Long-term Project","Short-term Project"]:
+                            organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
+                            if len(organization_actors) < START_SIZE and node_type == 'Actors':
+                                    test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
+                            if len(organization_actors) >= START_SIZE:
+                                actor = random.choice(organization_actors)
+                                test_graph.add_edge(actor, node, weight=1, type='connected_to', label='connected_to')
+                        else:
+                            test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
                 data_df.loc[len(data_df)] = [node, profile, choices, new_options,llm_choice, llm_response]
                 if len(data_df) % save_interval == 0:
                     data_df.to_csv(log_file)
