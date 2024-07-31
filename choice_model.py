@@ -294,7 +294,7 @@ class ChoiceModel:
                     if answer=='Yes' and (not test_graph.has_edge(idx, node)):
                         if test_graph.nodes[idx]['type'] in ["Organization","Long-term Project","Short-term Project"]:
                             organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
-                            if len(organization_actors) < START_SIZE and node_type == 'Actors':
+                            if len(organization_actors) < START_SIZE:
                                     test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
                             if len(organization_actors) >= START_SIZE:
                                 actor = random.choice(organization_actors)
