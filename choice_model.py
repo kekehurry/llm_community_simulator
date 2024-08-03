@@ -34,10 +34,11 @@ class ChoiceModel:
         embed_model="nomic-embed-text",
         chat_model="llama3.1:latest",
         embedding_dimension=768,
+        base_url = "http://127.0.0.1:11434",
         period=9
         ):
-        self.embed_model = OllamaEmbeddings(model=embed_model)
-        self.chat_model = ChatOllama(model=chat_model)
+        self.embed_model = OllamaEmbeddings(model=embed_model,base_url=base_url)
+        self.chat_model = ChatOllama(model=chat_model,base_url=base_url)
         self.embedding_dimension = embedding_dimension
         self._graph = self._load_graph(graph_path)
         self.graph = self._graph.copy()
