@@ -285,7 +285,7 @@ class ChoiceModel:
         failed_nodes = []
         log_file =  file_name.split('.')[0] + ".csv"
         self.roll_back(9)
-        # data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
+        data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
         for idx,node in tqdm(enumerate(new_nodes), total=len(new_nodes)):
             try:
                 profile = self.graph.nodes[node]['properties']
@@ -317,27 +317,28 @@ class ChoiceModel:
                     if 'Active' in answer:
                         test_graph.add_edge(node, idx, weight=1, type='connected_to', label='connected_to')
                     elif 'Passive' in answer:
-                        organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
-                        if test_graph.nodes[idx]['type'] in ["Organization"] and len(organization_actors)>0:
-                            organizor = organization_actors[0]
-                            test_graph.add_edge(organizor, node, weight=1, type='connected_to', label='connected_to')
-                        else:
-                            test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
+                        test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
+                        # organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
+                        # if test_graph.nodes[idx]['type'] in ["Organization"] and len(organization_actors)>0:
+                        #     organizor = organization_actors[0]
+                        #     test_graph.add_edge(organizor, node, weight=1, type='connected_to', label='connected_to')
+                        # else:
+                        #     test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
                     elif 'No' in answer:
                         pass
                     else:
                         raise ValueError("Invalid Answer")
-                # data_df.loc[idx] = [node, profile, choices, new_options,llm_choice, llm_response]
-                # if idx % save_interval == 0:
-                #     self.save_graph(file_name, test_graph)
-                    # data_df.to_csv(log_file)
+                data_df.loc[idx] = [node, profile, choices, new_options,llm_choice, llm_response]
+                if idx % save_interval == 0:
+                    self.save_graph(file_name, test_graph)
+                    data_df.to_csv(log_file)
             except Exception as e:
                 print(e)
                 failed_nodes.append(node)
                 pass
         # save the graph
         self.save_graph(file_name, test_graph)
-        # data_df.to_csv(log_file)
+        data_df.to_csv(log_file)
         return test_graph, failed_nodes
     
     def evaluate(self,graph=None):
