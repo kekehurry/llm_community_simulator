@@ -286,7 +286,7 @@ class ChoiceModel:
         failed_nodes = []
         log_file =  file_name.split('.')[0] + ".csv"
         self.roll_back(9)
-        data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
+        data_df = pd.DataFrame(columns=['node','llm_choice', 'llm_response'])
         for idx,node in tqdm(enumerate(new_nodes), total=len(new_nodes)):
             try:
                 profile = self.graph.nodes[node]['properties']
@@ -329,10 +329,10 @@ class ChoiceModel:
                         pass
                     else:
                         raise ValueError("Invalid Answer")
-                data_df.loc[idx] = [node, profile, choices, new_options,llm_choice, llm_response]
-                if idx % save_interval == 0:
-                    self.save_graph(file_name, test_graph)
-                    data_df.to_csv(log_file)
+                data_df.loc[idx] = [node,llm_choice, llm_response]
+                # if idx % save_interval == 0:
+                #     self.save_graph(file_name, test_graph)
+                #     data_df.to_csv(log_file)
             except Exception as e:
                 print(e)
                 failed_nodes.append(node)
