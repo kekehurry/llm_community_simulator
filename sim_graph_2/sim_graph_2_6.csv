@@ -1,0 +1,130 @@
+,node,profile,choices,new_options,llm_choice,llm_response
+0,1104,{'eventtopic': 'Lifestyle And Health'},"[{'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Self-employed', 'residentinneighbor': 'Yes', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Lifestyle And Health'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Environment And Sustainability'}]","[{'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Self-employed', 'residentinneighbor': 'Yes', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Lifestyle And Health'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Technology And Education'}]","{'answer': ['No', 'Passive', 'Active', 'Passive'], 'reasons': ['The given node has no information about age, gender, etc., so the new option with these characteristics is unlikely to be connected.', ""This option has the same 'eventtopic' as the given node, so it's likely that they're related. However, since there's no past connection between them, we'll consider this a passive possibility."", ""This option also has the same 'eventtopic' as the given node, and in the past, such nodes have been connected to each other with a probability of 0.1948122110909426, so it's likely that they're related."", ""This option is similar to one of the options that were connected to the given node in the past (probability: 0.2207511556362296), so it's likely that they're related.""]}","```json
+{
+    ""answer"": [
+        ""No"",
+        ""Passive"",
+        ""Active"",
+        ""Passive""
+    ],
+    ""reasons"": [
+        ""The given node has no information about age, gender, etc., so the new option with these characteristics is unlikely to be connected."",
+        ""This option has the same 'eventtopic' as the given node, so it's likely that they're related. However, since there's no past connection between them, we'll consider this a passive possibility."",
+        ""This option also has the same 'eventtopic' as the given node, and in the past, such nodes have been connected to each other with a probability of 0.1948122110909426, so it's likely that they're related."",
+        ""This option is similar to one of the options that were connected to the given node in the past (probability: 0.2207511556362296), so it's likely that they're related.""
+    ]
+}
+```"
+1,901,{'eventtopic': 'Culture And Arts'},"[{'eventtopic': 'Community And Organization'}, {'eventtopic': 'Community And Organization'}, {'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Environment And Sustainability'}]","[{'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Community And Organization'}]","{'answer': ['Passive', 'Active', 'Passive'], 'reasons': ['Given the context of past connections, this option is likely to be a passive connection due to its low probability (0.15958388422692962) compared to other options.', ""This option has a high probability (0.1808322315461408) and matches the 'eventtopic' of the given node, making it a likely active connection."", 'Although this option was previously connected with a moderate probability (0.15958388422692962), its probability is not as high as option 2, but still higher than option 1, suggesting a passive connection.']}","```json
+{
+    ""answer"": [
+        ""Passive"",
+        ""Active"",
+        ""Passive""
+    ],
+    ""reasons"": [
+        ""Given the context of past connections, this option is likely to be a passive connection due to its low probability (0.15958388422692962) compared to other options."",
+        ""This option has a high probability (0.1808322315461408) and matches the 'eventtopic' of the given node, making it a likely active connection."",
+        ""Although this option was previously connected with a moderate probability (0.15958388422692962), its probability is not as high as option 2, but still higher than option 1, suggesting a passive connection.""
+    ]
+}
+```"
+2,910,{'eventtopic': 'Technology And Education'},"[{'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Lifestyle And Health'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Technology And Education'}]","[{'eventtopic': 'Technology And Education'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Lifestyle And Health'}, {'eventtopic': 'Environment And Sustainability'}]","{'answer': ['Active', 'No', 'No', 'Active', 'No'], 'reasons': ['Previous node has been connected to the same event topic before. Probability of connection is relatively high.', 'Age and work status in the new option are different from previous connections, which makes it less likely for the given node to connect actively.', 'Education level is similar to previous connections, but gender and marital status are different. Hence, no strong possibility for active or passive connection.', 'Previous node has been connected to the same event topic before. Probability of connection is relatively high.', 'This option does not share any common characteristics with previous connections.']}","```json
+{
+    ""answer"": [
+        ""Active"",
+        ""No"",
+        ""No"",
+        ""Active"",
+        ""No""
+    ],
+    ""reasons"": [
+        ""Previous node has been connected to the same event topic before. Probability of connection is relatively high."",
+        ""Age and work status in the new option are different from previous connections, which makes it less likely for the given node to connect actively."",
+        ""Education level is similar to previous connections, but gender and marital status are different. Hence, no strong possibility for active or passive connection."",
+        ""Previous node has been connected to the same event topic before. Probability of connection is relatively high."",
+        ""This option does not share any common characteristics with previous connections.""
+    ]
+}
+```"
+3,151,"{'age': '18-35', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}","[{'eventtopic': 'Technology And Education'}, {'eventtopic': 'Community And Organization'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Technology And Education'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Environment And Sustainability'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Lifestyle And Health'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '35-55', 'gender': 'Female', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'Yes', 'educationlevel': 'Graduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'Yes', 'educationlevel': 'Undergraduate'}, {'age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'Yes', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}]","[{'eventtopic': 'Technology And Education'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'Yes', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'Yes', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Community And Organization'}, {'eventtopic': 'Lifestyle And Health'}, {'age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '35-55', 'gender': 'Female', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Environment And Sustainability'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'Yes', 'educationlevel': 'Undergraduate'}]","{'answer': ['No', 'Active', 'Active', 'Passive', 'No', 'No', 'No', 'Active', 'No', 'No'], 'reasons': ['The given node and the new option do not match in age.', 'The given node and the new option have a matching age range, but the new option has a different work status which could be a reason for the connection to be active.', 'The given node and the new option have a matching age range and work status, which makes it more likely for the connection to be passive.', 'There is no similarity between the given node and this new option.', 'There is no similarity between the given node and this new option.', 'There is no similarity between the given node and this new option.', 'The given node has a different education level than the new option, which could be a reason for the connection to be active.', 'There is no similarity between the given node and this new option.', 'There is no similarity between the given node and this new option.']}","```json
+{
+  ""answer"": [
+    ""No"",
+    ""Active"",
+    ""Active"",
+    ""Passive"",
+    ""No"",
+    ""No"",
+    ""No"",
+    ""Active"",
+    ""No"",
+    ""No""
+  ],
+  ""reasons"": [
+    ""The given node and the new option do not match in age."",
+    ""The given node and the new option have a matching age range, but the new option has a different work status which could be a reason for the connection to be active."",
+    ""The given node and the new option have a matching age range and work status, which makes it more likely for the connection to be passive."",
+    ""There is no similarity between the given node and this new option."",
+    ""There is no similarity between the given node and this new option."",
+    ""There is no similarity between the given node and this new option."",
+    ""The given node has a different education level than the new option, which could be a reason for the connection to be active."",
+    ""There is no similarity between the given node and this new option."",
+    ""There is no similarity between the given node and this new option.""
+  ]
+}
+```"
+4,680,{'eventtopic': 'Environment And Sustainability'},"[{'age': '35-55', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'Yes', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'Yes', 'educationlevel': 'Undergraduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'Yes', 'educationlevel': 'Graduate'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Community And Organization'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Community And Organization'}]","[{'eventtopic': 'Technology And Education'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'Yes', 'educationlevel': 'Undergraduate'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Community And Organization'}, {'age': '35-55', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'Yes', 'educationlevel': 'Graduate'}, {'eventtopic': 'Environment And Sustainability'}, {'age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'Yes', 'educationlevel': 'Graduate'}]","{'answer': ['Active', 'Passive', 'Active', 'No', 'Active', 'Active', 'No'], 'reasons': ['Similar profile with high probability', 'Different education level, but similar work status and resident in neighborhood', 'Similar profile with high probability', 'Different age group and occupation', 'Same event topic as the given node', 'Same event topic as the given node', 'Different profile with low probability']}","```json
+{
+    ""answer"": [
+        ""Active"",
+        ""Passive"",
+        ""Active"",
+        ""No"",
+        ""Active"",
+        ""Active"",
+        ""No""
+    ],
+    ""reasons"": [
+        ""Similar profile with high probability"",
+        ""Different education level, but similar work status and resident in neighborhood"",
+        ""Similar profile with high probability"",
+        ""Different age group and occupation"",
+        ""Same event topic as the given node"",
+        ""Same event topic as the given node"",
+        ""Different profile with low probability""
+    ]
+}
+```"
+5,986,{'eventtopic': 'Culture And Arts'},"[{'eventtopic': 'Community And Organization'}, {'eventtopic': 'Community And Organization'}, {'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Environment And Sustainability'}]","[{'eventtopic': 'Culture And Arts'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Community And Organization'}]","{'answer': ['Active', 'Passive', 'Passive'], 'reasons': [""High similarity with the given node's eventtopic ('Culture And Arts')"", 'Lower probability of connection in the past (0.15958388422692962) compared to other options, but similar event topic', 'Lower probability of connection in the past (0.15958388422692962), different event topic']}","```json
+{
+    ""answer"": [
+        ""Active"", 
+        ""Passive"", 
+        ""Passive""
+    ],
+    ""reasons"": [
+        ""High similarity with the given node's eventtopic ('Culture And Arts')"",
+        ""Lower probability of connection in the past (0.15958388422692962) compared to other options, but similar event topic"",
+        ""Lower probability of connection in the past (0.15958388422692962), different event topic""
+    ]
+}
+```"
+6,990,{'eventtopic': 'Technology And Education'},"[{'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Technology And Education'}, {'eventtopic': 'Lifestyle And Health'}, {'eventtopic': 'Environment And Sustainability'}, {'eventtopic': 'Technology And Education'}]","[{'eventtopic': 'Technology And Education'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Self-employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Lifestyle And Health'}, {'eventtopic': 'Environment And Sustainability'}]","{'answer': ['Active', 'Active', 'Active', 'No', 'No'], 'reasons': [""The given node has the same 'eventtopic' as one of the past connections, making an active connection likely."", ""One of the past connections had a similar profile ('age', 'gender') and a high probability (0.15007948066558743), making an active connection possible."", ""Another past connection had a similar profile ('age', 'gender', 'marrige', 'withkids') and a high probability (0.15007948066558743), making an active connection possible."", ""The given node's 'eventtopic' is different from the new option, making a passive connection more likely."", 'There are no past connections with similar profiles that would make a passive connection likely.']}","```json
+{
+    ""answer"": [
+        ""Active"",
+        ""Active"",
+        ""Active"",
+        ""No"",
+        ""No""
+    ],
+    ""reasons"": [
+        ""The given node has the same 'eventtopic' as one of the past connections, making an active connection likely."",
+        ""One of the past connections had a similar profile ('age', 'gender') and a high probability (0.15007948066558743), making an active connection possible."",
+        ""Another past connection had a similar profile ('age', 'gender', 'marrige', 'withkids') and a high probability (0.15007948066558743), making an active connection possible."",
+        ""The given node's 'eventtopic' is different from the new option, making a passive connection more likely."",
+        ""There are no past connections with similar profiles that would make a passive connection likely.""
+    ]
+}
+```"

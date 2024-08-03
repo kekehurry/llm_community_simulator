@@ -13,9 +13,9 @@ import re
 import json
 import pyvis.network as net
 from tqdm import tqdm
-import random
+import random,math
 
-START_SIZE = 10
+START_SIZE = 5
 
 class AnswerOutputParser(StrOutputParser):
     def parse(self, text: str) -> str:
@@ -74,13 +74,27 @@ class ChoiceModel:
         self.graph = self._graph.edge_subgraph(related_links).copy()
         self.period = period
 
-    def get_isolated_nodes(self):
-        isolated_nodes = [n for n in self.graph.nodes if self.graph.degree(n)==0]
+    def save_graph(self, file_name=f"old_graph/old_graph.pkl", graph=None):
+        if graph is None:
+            graph = self.graph
+        print(f"Saving graph to {file_name}")
+        with open(file_name, "wb") as f:
+            pickle.dump(graph, f)
+        
+
+    def get_isolated_nodes(self, graph=None):
+        if not graph:
+            graph = self.graph
+        isolated_nodes = [n for n in graph.nodes if graph.degree(n)==0]
         return isolated_nodes
     
-    def remove_isolated_nodes(self):
-        isolated_nodes = self.get_isolated_nodes()
-        self.graph.remove_nodes_from(isolated_nodes)
+    def remove_isolated_nodes(self,graph=None):
+        if not graph:
+            graph = self.graph
+        isolated_nodes = self.get_isolated_nodes(graph=graph)
+        graph.remove_nodes_from(isolated_nodes)
+        print(f"Removed {len(isolated_nodes)} isolated nodes")
+        return graph.copy()
 
 
     def similarity_search(self,query, k1=10, k2=5,node_type='Actors'):
@@ -151,7 +165,7 @@ class ChoiceModel:
             choices = [G.nodes[n] for n in choice_ids]
             if top_k is None:
                 top_k = len(choices)
-            probabilities = softmax(list(recommendation.values())[:top_k]).tolist()
+            probabilities = list(recommendation.values())[:top_k]
             choices = choices[:top_k]
             choice_ids = choice_ids[:top_k]
             return choices,probabilities,choice_ids
@@ -167,11 +181,12 @@ class ChoiceModel:
 
         # step 3: create compute graph
         compute_graph = self._graph.subgraph(neighbors).copy()
-        # normalize the weights of links
-        weights = nx.get_edge_attributes(compute_graph, 'weight')
-        max_weight = max(weights.values())
+        # # normalize the weights of links
+        # weights = nx.get_edge_attributes(compute_graph, 'weight')
+
+        # max_weight = max(weights.values())
         for e in compute_graph.edges():
-            compute_graph[e[0]][e[1]]['weight'] = compute_graph[e[0]][e[1]]['weight'] / max_weight
+            compute_graph[e[0]][e[1]]['weight'] = 1/compute_graph.degree(e[0]) 
         # normalize the weights of similarity scores
         max_score = round(max(similar_scores),2) + 1e-6
         similar_scores = [round(s / max_score,2) for s in similar_scores]
@@ -202,7 +217,7 @@ class ChoiceModel:
         choices,probabilities,_ = self.link_prediction(profile, k1, k2, node_type, choice_type, top_k)
         old_options = [ c['properties'] for c in choices]
         options_probabilities = [ p for p in probabilities]
-        old_context = {f"option:{o}, probability:{p}" for o,p in zip(old_options,options_probabilities)}
+        old_context = {f"option_{idx}:{o}" for idx,o in enumerate(old_options)}
         return old_context,choices
     
     def get_llm_choice(self,profile, new_options, old_context=None, node_type='Actors', choice_type=None, k1=10, k2=5, top_k=3):
@@ -216,21 +231,25 @@ class ChoiceModel:
         user_prompt = '''
         Given a {node_type} Node with profile:
         {profile}
-        And the context of {top_k} options a similar node connected in the past:
+        And the context of options a similar node connected in the past:
         {old_context}
         The new options are:
         {new_options}
         Is there any possibility for each new option that would connect to the given node ? 
         Note:
-        - Answer with a list of 'Yes' or 'No' for each new option.
+        - Answer with 'No','Active','Passive'. 'No' means no possibility, 'Active' means give node will active connect to the option, 'Passive' means given node will more likely passive connect to the option.
+        - You can choose multiple 'Active' or 'Passive' options, but the total number of 'non-No'options should be less than or equal to {top_k}.
+        - Output the answer and reasons in json format. the answer should be a list of choices, and the reasons should be a dictionary with the option index as key and the reason as value.
         - Wrap the final answer in triple backticks (```json ```) to indicate a json block.
-        - Following with the reasons.
-        - **DO NOT include the reseasons in the json block.**
-        Answer Format Example:
+        Output Format Example:
         ```json
         {{
-        answer: ['Yes','No','Yes'],
-        reasons: ['Reason for choice 1','Reason for choice 2','Reason for choice 3']
+        "answer": ["No","Active","Passive"],
+        "reasons": {{
+        "option_1": "reason for the choice",
+        "option_2": "reason for the choice",
+        "option_3": "reason for the choice"
+        }}
         }}
         ```
         '''
@@ -263,10 +282,11 @@ class ChoiceModel:
         return choice, response
     
     def predict_links(self, test_graph, new_nodes, save_interval=50, file_name="test_period.pkl",k1=10,k2=5, top_k=5, choice_type=None, period=None):
+        failed_nodes = []
         log_file =  file_name.split('.')[0] + ".csv"
         self.roll_back(9)
-        data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
-        for node in tqdm(new_nodes):
+        # data_df = pd.DataFrame(columns=['node', 'profile', 'choices', 'new_options','llm_choice', 'llm_response'])
+        for idx,node in tqdm(enumerate(new_nodes), total=len(new_nodes)):
             try:
                 profile = self.graph.nodes[node]['properties']
                 node_type = self.graph.nodes[node]['type']
@@ -283,7 +303,10 @@ class ChoiceModel:
                     link_options.extend(similar_nodes.tolist())
                 
                 link_options = list(set(link_options))
-                new_options = [test_graph.nodes[n]['properties'] for n in link_options]
+                other_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type']!= "Event"]
+                # only consider the events in the same period
+                event_options = [n for n in link_options if test_graph.nodes[n]['type']== "Event" and test_graph.nodes[n]['period'] == period]
+                new_options = other_options + event_options
                 # ask llm to predict links
                 llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,choice_type=choice_type, top_k=top_k)
                 # add edges
@@ -291,29 +314,31 @@ class ChoiceModel:
                 test_graph.add_node(node, type=node_type, properties=profile, embedding=self.embed_model.embed_query(str(profile)), 
                                     label=node_type, period=period)
                 for answer,idx in zip(llm_answer, link_options):
-                    if answer=='Yes' and (not test_graph.has_edge(idx, node)):
-                        if test_graph.nodes[idx]['type'] in ["Organization","Long-term Project","Short-term Project"]:
-                            organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
-                            if len(organization_actors) < START_SIZE:
-                                    test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
-                            if len(organization_actors) >= START_SIZE:
-                                actor = random.choice(organization_actors)
-                                test_graph.add_edge(actor, node, weight=1, type='connected_to', label='connected_to')
+                    if 'Active' in answer:
+                        test_graph.add_edge(node, idx, weight=1, type='connected_to', label='connected_to')
+                    elif 'Passive' in answer:
+                        organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
+                        if test_graph.nodes[idx]['type'] in ["Organization"] and len(organization_actors)>0:
+                            organizor = organization_actors[0]
+                            test_graph.add_edge(organizor, node, weight=1, type='connected_to', label='connected_to')
                         else:
                             test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
-                data_df.loc[len(data_df)] = [node, profile, choices, new_options,llm_choice, llm_response]
-                if len(data_df) % save_interval == 0:
-                    data_df.to_csv(log_file)
-                    with open(file_name, "wb") as f:
-                        pickle.dump(test_graph, f)
+                    elif 'No' in answer:
+                        pass
+                    else:
+                        raise ValueError("Invalid Answer")
+                # data_df.loc[idx] = [node, profile, choices, new_options,llm_choice, llm_response]
+                # if idx % save_interval == 0:
+                #     self.save_graph(file_name, test_graph)
+                    # data_df.to_csv(log_file)
             except Exception as e:
                 print(e)
+                failed_nodes.append(node)
                 pass
         # save the graph
-        with open(file_name, "wb") as f:
-            pickle.dump(test_graph, f)
-        data_df.to_csv(log_file)
-        return test_graph
+        self.save_graph(file_name, test_graph)
+        # data_df.to_csv(log_file)
+        return test_graph, failed_nodes
     
     def evaluate(self,graph=None):
         if graph is None:
