@@ -306,7 +306,7 @@ class ChoiceModel:
                 link_options = list(set(link_options))
                 other_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type']!= "Event"]
                 # only consider the events in the same period
-                event_options = [n for n in link_options if test_graph.nodes[n]['type']== "Event" and test_graph.nodes[n]['period'] == period]
+                event_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type']== "Event" and test_graph.nodes[n]['period'] == period]
                 new_options = other_options + event_options
                 # ask llm to predict links
                 llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,choice_type=choice_type, top_k=top_k)
@@ -318,13 +318,12 @@ class ChoiceModel:
                     if 'Active' in answer:
                         test_graph.add_edge(node, idx, weight=1, type='connected_to', label='connected_to')
                     elif 'Passive' in answer:
-                        test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
-                        # organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
-                        # if test_graph.nodes[idx]['type'] in ["Organization"] and len(organization_actors)>0:
-                        #     organizor = organization_actors[0]
-                        #     test_graph.add_edge(organizor, node, weight=1, type='connected_to', label='connected_to')
-                        # else:
-                        #     test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
+                        organization_actors = [n for n in test_graph.neighbors(idx) if test_graph.nodes[n]['type'] == 'Actors']
+                        if test_graph.nodes[idx]['type'] in ["Organization"] and len(organization_actors)>0:
+                            organizer = organization_actors[0]
+                            test_graph.add_edge(organizer, node, weight=1, type='connected_to', label='connected_to')
+                        else:
+                            test_graph.add_edge(idx, node, weight=1, type='connected_to', label='connected_to')
                     elif 'No' in answer:
                         pass
                     else:
@@ -395,7 +394,7 @@ class ChoiceModel:
         for node in visual_graph.nodes():
             visual_graph.nodes[node]["color"] = color_map[visual_graph.nodes[node]["type"]]
         
-        nt = net.Network("800px", "1200px")
+        nt = net.Network("600px", "800px")
         nt.from_nx(nx_graph=visual_graph)
         nt.write_html(file_name)
     
