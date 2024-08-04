@@ -66,13 +66,17 @@ class ChoiceModel:
         return degree_centralities
 
     def get_period(self, period):
-        related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] == period]
-        graph = self._graph.edge_subgraph(related_links).copy()
+        # related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] == period]
+        # graph = self._graph.edge_subgraph(related_links).copy()
+        related_nodes = [node for node in self._graph.nodes() if self._graph.nodes[node]["period"] == period]
+        graph = self._graph.subgraph(related_nodes).copy()
         return graph
 
     def roll_back(self, period):
-        related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] <= period]
-        self.graph = self._graph.edge_subgraph(related_links).copy()
+        # related_links = [link for link in self._graph.edges() if self._graph.edges[link]["period"] <= period]
+        # self.graph = self._graph.edge_subgraph(related_links).copy()
+        related_nodes = [node for node in self._graph.nodes() if self._graph.nodes[node]["period"] <= period]
+        self.graph = self._graph.subgraph(related_nodes).copy()
         self.period = period
 
     def save_graph(self, file_name=f"old_graph/old_graph.pkl", graph=None):
@@ -304,10 +308,19 @@ class ChoiceModel:
                     link_options.extend(similar_nodes.tolist())
                 
                 link_options = list(set(link_options))
-                other_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type']!= "Event"]
-                # only consider the events in the same period
-                event_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type']== "Event" and test_graph.nodes[n]['period'] == period]
-                new_options = other_options + event_options
+                short_term_types =['Short-term Project','Event','Media Content']
+                long_term_types = ['Long-term Project','Organization','Space','Actors']
+
+                long_term_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type'] in long_term_types]
+                # only consider the short-term nodes in the same period
+                short_term_options = [test_graph.nodes[n]['properties'] for n in link_options if (test_graph.nodes[n]['type'] in short_term_types and test_graph.nodes[n]['period'] in [period-1,period])]
+
+                print([test_graph.nodes[n]['type'] for n in link_options])
+                print([test_graph.nodes[n]['period'] for n in link_options])
+
+                print(f"Node {node} has {len(long_term_options)} long-term options and {len(short_term_options)} short-term options in period {period}")
+                new_options = long_term_options + short_term_options
+
                 # ask llm to predict links
                 llm_choice, llm_response = self.get_llm_choice(profile=profile, new_options=new_options, old_context=old_context, k1=k1,k2=k2, node_type=node_type,choice_type=choice_type, top_k=top_k)
                 # add edges
