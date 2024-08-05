@@ -241,6 +241,16 @@ class ChoiceModel:
         The new options are:
         {new_options}
         Is there any possibility for each new option that would connect to the given node ? 
+        
+        Node Types:
+        - Actors: Individuals with demographic and work-life attributes.
+        - Space: Physical spaces like kitchens, meeting rooms, cafes, galleries, and outdoor areas.
+        - Event: Events on topics such as environment, culture, technology, lifestyle, and community.
+        - Media Content: Media nodes on various topics.
+        - Short-term Project: Projects with specific, short-term themes.
+        - Long-term Project: Projects with sustained, long-term efforts.
+        - Organization: Various actor-engaged organizations.
+        
         Note:
         - Answer with 'No','Active','Passive'. 'No' means no possibility, 'Active' means give node will active connect to the option, 'Passive' means given node will more likely passive connect to the option.
         - You can choose multiple 'Active' or 'Passive' options, but the total number of 'non-No'options should be less than or equal to {top_k}.
@@ -314,11 +324,7 @@ class ChoiceModel:
                 long_term_options = [test_graph.nodes[n]['properties'] for n in link_options if test_graph.nodes[n]['type'] in long_term_types]
                 # only consider the short-term nodes in the same period
                 short_term_options = [test_graph.nodes[n]['properties'] for n in link_options if (test_graph.nodes[n]['type'] in short_term_types and test_graph.nodes[n]['period'] in [period-1,period])]
-
-                print([test_graph.nodes[n]['type'] for n in link_options])
-                print([test_graph.nodes[n]['period'] for n in link_options])
-
-                print(f"Node {node} has {len(long_term_options)} long-term options and {len(short_term_options)} short-term options in period {period}")
+                
                 new_options = long_term_options + short_term_options
 
                 # ask llm to predict links
