@@ -1,0 +1,39 @@
+,node,llm_choice,llm_response
+254,601,"{'answer': ['Active', 'Passive', 'No', 'No', 'Active', 'No'], 'reasons': {'0': ""The eventtopic of this option is 'Culture And Arts', which is also present in the past connections of a similar node."", '1': 'The age, gender, marrige, withkids, student and workstatue of this option are very similar to those of an active connection in the past.', '2': ""There's no similarity between this option and any of the past connections"", '3': 'No similarity found between this option and any past connections', '4': ""The eventtopic of this option is 'Technology And Education', which is present in one of the options with a similar node connected in the past.""}}","```json
+{
+  ""answer"": [""Active"", ""Passive"", ""No"", ""No"", ""Active"", ""No""],
+  ""reasons"": {
+    ""0"": ""The eventtopic of this option is 'Culture And Arts', which is also present in the past connections of a similar node."",
+    ""1"": ""The age, gender, marrige, withkids, student and workstatue of this option are very similar to those of an active connection in the past."",
+    ""2"": ""There's no similarity between this option and any of the past connections"",
+    ""3"": ""No similarity found between this option and any past connections"",
+    ""4"": ""The eventtopic of this option is 'Technology And Education', which is present in one of the options with a similar node connected in the past.""
+  }
+}
+```"
+303,685,"{'answer': ['Passive', 'No', 'Active', 'Passive'], 'reasons': {'0': 'The option is an actor with similar demographic attributes to the given event node, which could lead to a passive connection.', '1': ""There's no direct relevance between this option and the given event node, so it's unlikely to be connected."", '2': ""This option has a relevant topic ('Environment And Sustainability') that could connect to the given event node, making an active connection possible."", '3': ""The option has a relevant topic ('Culture And Arts') that could connect to the given event node, but less likely than option 2, so it's considered passive.""}}","```json
+{
+  ""answer"": [
+    ""Passive"",
+    ""No"",
+    ""Active"",
+    ""Passive""
+  ],
+  ""reasons"": {
+    ""0"": ""The option is an actor with similar demographic attributes to the given event node, which could lead to a passive connection."",
+    ""1"": ""There's no direct relevance between this option and the given event node, so it's unlikely to be connected."",
+    ""2"": ""This option has a relevant topic ('Environment And Sustainability') that could connect to the given event node, making an active connection possible."",
+    ""3"": ""The option has a relevant topic ('Culture And Arts') that could connect to the given event node, but less likely than option 2, so it's considered passive.""
+  }
+}
+```"
+841,203,"{'answer': ['Active', 'No', 'Passive'], 'reasons': {'0': ""The given node has a profile of 'Culture And Arts' which matches the eventtopic in option_3 'Technology And Education'. This is an active possibility because the two nodes share similar characteristics."", '1': 'There is no match between the given node and option_1. Therefore, this connection is impossible.', '2': ""The given node has a profile of 'Culture And Arts' which does not match any of the eventtopics in option_0,option_4 or option_7. However, all three options have the same topic 'Environment And Sustainability', which could be an active possibility if there was some other connection.""}}","```json
+{
+  ""answer"": [""Active"", ""No"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node has a profile of 'Culture And Arts' which matches the eventtopic in option_3 'Technology And Education'. This is an active possibility because the two nodes share similar characteristics."",
+    ""1"": ""There is no match between the given node and option_1. Therefore, this connection is impossible."",
+    ""2"": ""The given node has a profile of 'Culture And Arts' which does not match any of the eventtopics in option_0,option_4 or option_7. However, all three options have the same topic 'Environment And Sustainability', which could be an active possibility if there was some other connection.""
+  }
+}
+```"

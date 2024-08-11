@@ -1,0 +1,31 @@
+,node,llm_choice,llm_response
+301,653,"{'answer': ['Passive', 'Active', 'No'], 'reasons': {'0': ""This option has a different 'eventtopic' but similar demographic attributes to the given node, which makes it more likely for a passive connection."", '1': ""The given node's 'eventtopic' matches this option's 'eventtopic', and both have similar demographic attributes, making an active connection possible."", '2': ""This option has different demographic attributes and a different 'eventtopic' than the given node, making it unlikely for a connection.""}}","```json
+{
+  ""answer"": [""Passive"",""Active"",""No""],
+  ""reasons"": {
+    ""0"": ""This option has a different 'eventtopic' but similar demographic attributes to the given node, which makes it more likely for a passive connection."",
+    ""1"": ""The given node's 'eventtopic' matches this option's 'eventtopic', and both have similar demographic attributes, making an active connection possible."",
+    ""2"": ""This option has different demographic attributes and a different 'eventtopic' than the given node, making it unlikely for a connection.""
+  }
+}
+```"
+562,814,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': 'No possibility due to different eventtopic', '1': ""High probability of passive connection due to similar age and gender demographics, and the option's eventtopic matches one of the given options' eventtopics."", '2': 'No possibility due to different eventtopic'}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""No possibility due to different eventtopic"",
+    ""1"": ""High probability of passive connection due to similar age and gender demographics, and the option's eventtopic matches one of the given options' eventtopics."",
+    ""2"": ""No possibility due to different eventtopic""
+  }
+}
+```"
+303,893,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""Similar eventtopic 'Culture And Arts' exists in context, making 'Passive' connection more likely."", '1': ""Same eventtopic 'Technology And Education' is found in the given node and option_1, making an active connection possible."", '2': ""Although similar eventtopic 'Lifestyle And Health' exists in option_3 of the context, there's no direct match with the new options. However, considering the strong topic affinity, a 'Passive' connection is plausible.""}}","```json
+{
+  ""answer"": [""No"", ""Active"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""Similar eventtopic 'Culture And Arts' exists in context, making 'Passive' connection more likely."",
+    ""1"": ""Same eventtopic 'Technology And Education' is found in the given node and option_1, making an active connection possible."",
+    ""2"": ""Although similar eventtopic 'Lifestyle And Health' exists in option_3 of the context, there's no direct match with the new options. However, considering the strong topic affinity, a 'Passive' connection is plausible.""
+  }
+}
+```"

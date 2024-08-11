@@ -1,0 +1,43 @@
+,node,llm_choice,llm_response
+14,1063,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': 'The given node and new option have different types. The node is an Event, while the new option is an Actor.', '1': 'The eventtopic of the new option matches the event topic of the given node.', '2': ""Although the new option has a different eventtopic than the given node, it's still related to environment and sustainability, which might be relevant.""}}","```json
+{
+  ""answer"": [""No"", ""Active"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node and new option have different types. The node is an Event, while the new option is an Actor."",
+    ""1"": ""The eventtopic of the new option matches the event topic of the given node."",
+    ""2"": ""Although the new option has a different eventtopic than the given node, it's still related to environment and sustainability, which might be relevant.""
+  }
+}
+```"
+133,591,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node is an Organization Node with profile {'eventtopic': 'Technology And Education'} and a context of options. The new option [{'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Environment And Sustainability'}] matches the given node's profile, which makes it a possible active connection."", '1': ""The new option [{'age': '35-55', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Technology And Education'}] does not match the given node's profile, which makes it a possible passive connection."", '2': ""The new option [{'age': '35-55', 'gender': 'Female', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Community And Organization'}] does not match the given node's profile, which makes it a possible passive connection.""}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node is an Organization Node with profile {'eventtopic': 'Technology And Education'} and a context of options. The new option [{'age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Environment And Sustainability'}] matches the given node's profile, which makes it a possible active connection."",
+    ""1"": ""The new option [{'age': '35-55', 'gender': 'Male', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate'}, {'eventtopic': 'Technology And Education'}] does not match the given node's profile, which makes it a possible passive connection."",
+    ""2"": ""The new option [{'age': '35-55', 'gender': 'Female', 'marrige': 'Yes', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate'}, {'eventtopic': 'Community And Organization'}] does not match the given node's profile, which makes it a possible passive connection.""
+  }
+}
+```"
+528,1114,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node's event topic is 'Community And Organization', which does not match the new option's event topic 'Environment And Sustainability'."", '1': ""The given node's profile matches the new option's profile, indicating a possible active connection."", '3': ""Although the given node's event topic does not directly relate to the new option's event topic, they both belong to the category of sustainability and community, which could lead to a passive connection.""}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node's event topic is 'Community And Organization', which does not match the new option's event topic 'Environment And Sustainability'."",
+    ""1"": ""The given node's profile matches the new option's profile, indicating a possible active connection."",
+    ""3"": ""Although the given node's event topic does not directly relate to the new option's event topic, they both belong to the category of sustainability and community, which could lead to a passive connection.""
+  }
+}
+```"
+720,455,"{'answer': ['Active', 'Passive', 'No', 'Active', 'Passive'], 'reasons': {'0': 'The given node is of type Actors and has a similar profile to option 0 (Community And Organization). This makes it likely for the given node to actively connect to this option.', '1': ""Option 1 has an event topic that matches with option_1 from context (Community And Organization), which is also matched by the given node's profile. So, it is likely for the given node to passively connect to this option."", '2': 'The given node does not have a matching profile or event topic for option 2 (Environment And Sustainability). Therefore, there is no possibility of connection between the given node and this option.', '3': ""Option 3 has an event topic that matches with option_1 from context (Community And Organization), which is also matched by the given node's profile. So, it is likely for the given node to actively connect to this option."", '4': 'The given node does not have a matching profile or event topic for option 4 (Technology And Education). Therefore, there is no possibility of connection between the given node and this option.'}}","```json
+{
+  ""answer"": [""Active"", ""Passive"", ""No"", ""Active"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node is of type Actors and has a similar profile to option 0 (Community And Organization). This makes it likely for the given node to actively connect to this option."",
+    ""1"": ""Option 1 has an event topic that matches with option_1 from context (Community And Organization), which is also matched by the given node's profile. So, it is likely for the given node to passively connect to this option."",
+    ""2"": ""The given node does not have a matching profile or event topic for option 2 (Environment And Sustainability). Therefore, there is no possibility of connection between the given node and this option."",
+    ""3"": ""Option 3 has an event topic that matches with option_1 from context (Community And Organization), which is also matched by the given node's profile. So, it is likely for the given node to actively connect to this option."",
+    ""4"": ""The given node does not have a matching profile or event topic for option 4 (Technology And Education). Therefore, there is no possibility of connection between the given node and this option.""
+  }
+}
+```"

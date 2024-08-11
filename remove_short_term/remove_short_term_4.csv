@@ -1,0 +1,10 @@
+,node,llm_choice,llm_response
+254,875,"{'answer': ['No', 'Active'], 'reasons': {'0': ""This option has a similar 'eventtopic' to the past connection, so it's likely to be active."", '1': ""This option has a different 'eventtopic' than the given node and the past connection.""}}","```json
+{
+  ""answer"": [""No"",""Active""],
+  ""reasons"": {
+    ""0"": ""This option has a similar 'eventtopic' to the past connection, so it's likely to be active."",
+    ""1"": ""This option has a different 'eventtopic' than the given node and the past connection.""
+  }
+}
+```"

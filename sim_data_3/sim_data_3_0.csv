@@ -1,0 +1,21 @@
+,node,llm_choice,llm_response
+282,288,"{'answer': ['Active', 'Passive', 'No', 'No'], 'reasons': {'0': 'The given node has similar attributes to option 0, so it is likely to be active in this connection.', '1': 'Option 1 has a different nodetype and gender attribute than the given node, making passive connection more likely.', '2': ""The given node's attributes do not match with the nodetype of option 2, so there is no possibility for connection."", '3': ""Similarly, the given node does not match with option 3's attributes, leading to no possibility.""}}","```json
+{
+  ""answer"": [""Active"", ""Passive"", ""No"", ""No""],
+  ""reasons"": {
+    ""0"": ""The given node has similar attributes to option 0, so it is likely to be active in this connection."",
+    ""1"": ""Option 1 has a different nodetype and gender attribute than the given node, making passive connection more likely."",
+    ""2"": ""The given node's attributes do not match with the nodetype of option 2, so there is no possibility for connection."",
+    ""3"": ""Similarly, the given node does not match with option 3's attributes, leading to no possibility.""
+  }
+}
+```"
+246,808,"{'answer': ['No', 'Active'], 'reasons': {'0': ""The given event node is on topic 'Environment And Sustainability', which doesn't align with any of the options provided. Therefore, there's no possibility for any new option to connect to the given node."", '1': ""One of the new options has a similar nodetype 'Actors' and demographic attributes such as age, gender, marriage status, etc., that can potentially connect to the given event node on topic 'Environment And Sustainability'.""}}","```json
+{
+  ""answer"": [""No"",""Active""],
+  ""reasons"": {
+    ""0"": ""The given event node is on topic 'Environment And Sustainability', which doesn't align with any of the options provided. Therefore, there's no possibility for any new option to connect to the given node."",
+    ""1"": ""One of the new options has a similar nodetype 'Actors' and demographic attributes such as age, gender, marriage status, etc., that can potentially connect to the given event node on topic 'Environment And Sustainability'.""
+  }
+}
+```"

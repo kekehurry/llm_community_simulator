@@ -1,0 +1,182 @@
+,node,llm_choice,llm_response
+301,117,"{'answer': ['Active', 'No', 'Passive'], 'reasons': {'0': ""The new option has the same 'eventtopic' as the given node, and one of the similar nodes connected in the past had the same 'eventtopic'."", '1': 'There is no possibility for this option because it does not match with any of the similar nodes connected in the past.', '2': ""The new option has different 'age', 'gender', 'marrige' and 'educationlevel' compared to one of the similar nodes connected in the past, but they both have the same 'eventtopic'.""}}","```json
+{
+  ""answer"": [""Active"", ""No"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The new option has the same 'eventtopic' as the given node, and one of the similar nodes connected in the past had the same 'eventtopic'."",
+    ""1"": ""There is no possibility for this option because it does not match with any of the similar nodes connected in the past."",
+    ""2"": ""The new option has different 'age', 'gender', 'marrige' and 'educationlevel' compared to one of the similar nodes connected in the past, but they both have the same 'eventtopic'.""
+  }
+}
+```"
+148,992,"{'answer': ['No', 'Passive'], 'reasons': {'0': ""The given node and option_1 are both related to 'Environment And Sustainability' which is not a topic in the past context that connects to the Media Content Node. However, it's still possible for them to connect as they share a common category."", '1': ""Given the Media Content Node was connected with option_2 in the past and given node shares the same eventtopic 'Culture And Arts', there is an active possibility of them connecting again.""}}","```json
+{
+  ""answer"": [""No"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node and option_1 are both related to 'Environment And Sustainability' which is not a topic in the past context that connects to the Media Content Node. However, it's still possible for them to connect as they share a common category."",
+    ""1"": ""Given the Media Content Node was connected with option_2 in the past and given node shares the same eventtopic 'Culture And Arts', there is an active possibility of them connecting again.""
+  }
+}
+```"
+303,1116,"{'answer': ['Active', 'No', 'Passive'], 'reasons': {'0': ""The given node has a similar profile with 'option_1' in terms of eventtopic. Therefore, it is possible for the two nodes to connect."", '1': 'The option does not match with any previous connected options. It might be too different from the current node.', '2': ""The given node's context shows that there are previously connected nodes with similar profiles like 'option_3'. Although they have a different topic, it is possible for the new option to connect to the given node in a passive manner.""}}","```json
+{
+  ""answer"": [""Active"", ""No"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node has a similar profile with 'option_1' in terms of eventtopic. Therefore, it is possible for the two nodes to connect."",
+    ""1"": ""The option does not match with any previous connected options. It might be too different from the current node."",
+    ""2"": ""The given node's context shows that there are previously connected nodes with similar profiles like 'option_3'. Although they have a different topic, it is possible for the new option to connect to the given node in a passive manner.""
+  }
+}
+```"
+151,904,"{'answer': ['Active', 'Passive', 'No', 'No', 'No', 'No', 'No', 'No', 'No'], 'reasons': {'0': 'option has the same demographic attributes as the given node and is similar in nature to the context options.', '1': 'option has a different demographic profile than the given node but shares a similar event topic with some of the context options, suggesting it could be a passive connection.', '2': 'option does not share any similarities with the given node or the context options, making an active or passive connection unlikely.', '3': ""option is unrelated to the given node and context options, so there's no possibility for a connection."", '4': ""option has a different demographic profile than the given node and doesn't match any event topics from the context options."", '5': ""option doesn't share any similarities with the given node or the context options, making an active or passive connection unlikely.""}}","```json
+{
+  ""answer"": [
+    ""Active"", 
+    ""Passive"", 
+    ""No"", 
+    ""No"", 
+    ""No"", 
+    ""No"", 
+    ""No"", 
+    ""No"", 
+    ""No""
+  ],
+  ""reasons"": {
+    ""0"": ""option has the same demographic attributes as the given node and is similar in nature to the context options."",
+    ""1"": ""option has a different demographic profile than the given node but shares a similar event topic with some of the context options, suggesting it could be a passive connection."",
+    ""2"": ""option does not share any similarities with the given node or the context options, making an active or passive connection unlikely."",
+    ""3"": ""option is unrelated to the given node and context options, so there's no possibility for a connection."",
+    ""4"": ""option has a different demographic profile than the given node and doesn't match any event topics from the context options."",
+    ""5"": ""option doesn't share any similarities with the given node or the context options, making an active or passive connection unlikely.""
+  }
+}
+```"
+11,577,"{'answer': ['No', 'Active'], 'reasons': {'0': 'The given node and option 0 have different actor types (Actors and Event) which makes passive connection possible.', '1': ""The age, gender, marriage, withkids, student, workstatue, residentinneighbor attributes of the given node match option 1's profile.""}}","```json
+{
+  ""answer"": [""No"", ""Active""],
+  ""reasons"": {
+    ""0"": ""The given node and option 0 have different actor types (Actors and Event) which makes passive connection possible."",
+    ""1"": ""The age, gender, marriage, withkids, student, workstatue, residentinneighbor attributes of the given node match option 1's profile.""
+  }
+}
+```"
+535,907,"{'answer': ['Active', 'No', 'Passive', 'No', 'No', 'No', 'Passive', 'No'], 'reasons': {'0': 'The given node has the same demographic attributes as the new option.', '2': 'Although the eventtopic of the given node and the new option are different, they are both related to culture, making a connection more likely.', '4': 'Although the given node and the new option have similar workstatue, the education level is not matched. Hence, the likelihood of connection is low.', '5': 'Although the eventtopic of the given node and the new option are different, they are both related to culture, making a connection more likely.'}}","```json
+{
+  ""answer"": [
+    ""Active"", 
+    ""No"", 
+    ""Passive"", 
+    ""No"", 
+    ""No"", 
+    ""No"", 
+    ""Passive"", 
+    ""No""
+  ],
+  ""reasons"": {
+    ""0"": ""The given node has the same demographic attributes as the new option."",
+    ""2"": ""Although the eventtopic of the given node and the new option are different, they are both related to culture, making a connection more likely."",
+    ""4"": ""Although the given node and the new option have similar workstatue, the education level is not matched. Hence, the likelihood of connection is low."",
+    ""5"": ""Although the eventtopic of the given node and the new option are different, they are both related to culture, making a connection more likely.""
+  }
+}
+```"
+837,1095,"{'answer': ['Active', 'No'], 'reasons': {'0': ""The given Media Content Node has a profile of 'Environment And Sustainability', which is similar to option_0's topic. This suggests an active connection."", '1': ""Option_1's topic, 'Technology And Education', does not have any similarity with the given node's topic. Therefore, there is no possibility for it.""}}","```json
+{
+  ""answer"": [""Active"", ""No""],
+  ""reasons"": {
+    ""0"": ""The given Media Content Node has a profile of 'Environment And Sustainability', which is similar to option_0's topic. This suggests an active connection."",
+    ""1"": ""Option_1's topic, 'Technology And Education', does not have any similarity with the given node's topic. Therefore, there is no possibility for it.""
+  }
+}
+```"
+840,123,"{'answer': ['Active', 'Passive'], 'reasons': {'0': ""The given node and the new option both have 'eventtopic' as 'Community And Organization', which suggests a strong connection."", '2': 'Although the given node and the new option have different demographics, they share similar event topics, indicating some level of compatibility.'}}","```json
+{
+  ""answer"": [""Active"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node and the new option both have 'eventtopic' as 'Community And Organization', which suggests a strong connection."",
+    ""2"": ""Although the given node and the new option have different demographics, they share similar event topics, indicating some level of compatibility.""
+  }
+}
+```"
+582,498,"{'answer': ['Active', 'Passive'], 'reasons': {'option_6': ""The given node and option 6 have some common attributes like eventtopic is not in common, but both are related to culture and arts. So it's an active possibility."", 'option_4': ""Option 4 has the same event topic as the given node, so it's a passive possibility.""}}","```json
+{
+  ""answer"": [""Active"", ""Passive""],
+  ""reasons"": {
+    ""option_6"": ""The given node and option 6 have some common attributes like eventtopic is not in common, but both are related to culture and arts. So it's an active possibility."",
+    ""option_4"": ""Option 4 has the same event topic as the given node, so it's a passive possibility.""
+  }
+}
+```"
+562,1136,"{'answer': ['No', 'Passive'], 'reasons': {'0': 'The given node is a Meeting Room, which might not directly connect to actors with specific demographic and work-life attributes. However, it could be used as a meeting point for people with similar interests.', '1': ""The given node is a Meeting Room, which matches the 'Space' type of the options. This makes an active connection possible.""}}","```json
+{
+  ""answer"": [""No"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node is a Meeting Room, which might not directly connect to actors with specific demographic and work-life attributes. However, it could be used as a meeting point for people with similar interests."",
+    ""1"": ""The given node is a Meeting Room, which matches the 'Space' type of the options. This makes an active connection possible.""
+  }
+}
+```"
+319,576,"{'answer': ['Active', 'Passive', 'No', 'No', 'Active', 'Passive', 'No', 'No', 'No', 'No'], 'reasons': {'0': 'The given node has a similar profile to the option, but is more likely to be active as they have different work status.', '1': 'The given node has a similar profile to the option, and would likely passive connect as their education level and work status are different.', '2': 'No connection as event topic does not match with the given node', '3': 'No connection as event topic does not match with the given node', '4': 'The given node has a similar profile to the option, but is more likely to be active as they have different work status.', '5': 'No connection as age and gender do not match with the given node', '6': 'No connection as event topic does not match with the given node'}}","```json
+{
+  ""answer"": [
+    ""Active"",
+    ""Passive"",
+    ""No"",
+    ""No"",
+    ""Active"",
+    ""Passive"",
+    ""No"",
+    ""No"",
+    ""No"",
+    ""No""
+  ],
+  ""reasons"": {
+    ""0"": ""The given node has a similar profile to the option, but is more likely to be active as they have different work status."",
+    ""1"": ""The given node has a similar profile to the option, and would likely passive connect as their education level and work status are different."",
+    ""2"": ""No connection as event topic does not match with the given node"",
+    ""3"": ""No connection as event topic does not match with the given node"",
+    ""4"": ""The given node has a similar profile to the option, but is more likely to be active as they have different work status."",
+    ""5"": ""No connection as age and gender do not match with the given node"",
+    ""6"": ""No connection as event topic does not match with the given node""
+  }
+}
+```"
+180,557,"{'answer': ['No', 'Active', 'Passive', 'No', 'Active'], 'reasons': {'0': 'The given node has a different profile type (Actors) compared to the option (Event).', '1': 'The age range of the given node (18-35) is within the same range as the option, increasing the likelihood of connection.', '2': 'There are no overlapping demographic attributes between the given node and this option.', '3': ""Similar age and gender to the given node's profile, but the workstatue attribute differs."", '4': 'The given node has a different profile type (Actors) compared to the option (Event).'}}","```json
+{
+  ""answer"": [
+    ""No"",
+    ""Active"",
+    ""Passive"",
+    ""No"",
+    ""Active""
+  ],
+  ""reasons"": {
+    ""0"": ""The given node has a different profile type (Actors) compared to the option (Event)."",
+    ""1"": ""The age range of the given node (18-35) is within the same range as the option, increasing the likelihood of connection."",
+    ""2"": ""There are no overlapping demographic attributes between the given node and this option."",
+    ""3"": ""Similar age and gender to the given node's profile, but the workstatue attribute differs."",
+    ""4"": ""The given node has a different profile type (Actors) compared to the option (Event).""
+  }
+}
+```"
+724,822,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node (Actor) has a different age range ('18-35') than option_1 ('age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate')"", '1': ""The given node (Actor) has a different work status ('Freelancer') than option_2 ('age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate')"", '3': ""The given node (Actor) has a different education level ('Graduate') than option_4 ('age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate')"", '4': ""The given node (Actor) has a different age range ('18-35') than option_3 ('age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate')""}}","```json
+{
+  ""answer"": [""No"", ""Active"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node (Actor) has a different age range ('18-35') than option_1 ('age': '18-35', 'gender': 'Female', 'marrige': 'No', 'withkids': 'No', 'student': 'Yes', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate')"",
+    ""1"": ""The given node (Actor) has a different work status ('Freelancer') than option_2 ('age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Employed', 'residentinneighbor': 'No', 'educationlevel': 'Graduate')"",
+    ""3"": ""The given node (Actor) has a different education level ('Graduate') than option_4 ('age': '18-35', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Graduate')"",
+    ""4"": ""The given node (Actor) has a different age range ('18-35') than option_3 ('age': '35-55', 'gender': 'Male', 'marrige': 'No', 'withkids': 'No', 'student': 'No', 'workstatue': 'Freelancer', 'residentinneighbor': 'No', 'educationlevel': 'Undergraduate')""
+  }
+}
+```"
+464,823,"{'answer': ['Active', 'Passive', 'No'], 'reasons': {'0': ""Given node and option 1 have similar topic ('Community And Organization' vs 'Culture And Arts')"", '1': ""Given node has similar education level ('Graduate' vs 'Graduate') and work status ('Freelancer' vs 'Self-employed') to option 2, but different age group (18-35 vs 18-35)"", '2': ""Given node's education level is higher than option 3's ('Graduate' vs 'Undergraduate')""}}","```json
+{
+  ""answer"": [""Active"",""Passive"",""No""],
+  ""reasons"": {
+    ""0"": ""Given node and option 1 have similar topic ('Community And Organization' vs 'Culture And Arts')"",
+    ""1"": ""Given node has similar education level ('Graduate' vs 'Graduate') and work status ('Freelancer' vs 'Self-employed') to option 2, but different age group (18-35 vs 18-35)"",
+    ""2"": ""Given node's education level is higher than option 3's ('Graduate' vs 'Undergraduate')""
+  }
+}
+```"
