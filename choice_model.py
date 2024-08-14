@@ -40,7 +40,8 @@ class ChoiceModel:
                  ):
         self.embed_model = OllamaEmbeddings(
             model=embed_model, base_url=base_url)
-        self.chat_model = ChatOllama(model=chat_model, base_url=base_url)
+        self.chat_model = ChatOllama(
+            model=chat_model, base_url=base_url, seed=42)
         self.embedding_dimension = embedding_dimension
         self._graph = self._load_graph(graph_path)
         self.graph = self._graph.copy()
