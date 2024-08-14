@@ -31,7 +31,7 @@ class AnswerOutputParser(StrOutputParser):
 
 class ChoiceModel:
     def __init__(self,
-                 graph_path="community_graph_embeded.pkl",
+                 graph_path="data/community_graph_embeded.pkl",
                  embed_model="nomic-embed-text",
                  chat_model="llama3.1:latest",
                  embedding_dimension=768,
@@ -80,7 +80,7 @@ class ChoiceModel:
         self.graph = self._graph.subgraph(related_nodes).copy()
         self.period = period
 
-    def save_graph(self, file_name=f"old_graph/old_graph.pkl", graph=None):
+    def save_graph(self, file_name, graph=None):
         if graph is None:
             graph = self.graph
         print(f"Saving graph to {file_name}")

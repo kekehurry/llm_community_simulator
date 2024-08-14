@@ -1,0 +1,135 @@
+,node,llm_choice,llm_response
+720,422,"{'answer': ['Active', 'No', 'Passive'], 'reasons': {'0': 'The given node and option_0 have different types, so there is no possibility.', '1': ""The given node has 'educationlevel' as 'Graduate', while the new option has 'educationlevel' as 'Undergraduate'. This makes a passive connection more likely."", '2': ""The given node's profile doesn't match option_3 much.""}}","```json
+{
+  ""answer"": [""Active"", ""No"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node and option_0 have different types, so there is no possibility."",
+    ""1"": ""The given node has 'educationlevel' as 'Graduate', while the new option has 'educationlevel' as 'Undergraduate'. This makes a passive connection more likely."",
+    ""2"": ""The given node's profile doesn't match option_3 much.""
+  }
+}
+```"
+1029,252,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node is an actor with attributes matching option 6, so it's likely to be active in connecting with a similar node."", '1': ""Option 2 has an event topic that doesn't match the actor type of the given node, making it unlikely for them to connect actively or passively."", '2': ""The demographic and work-life attributes of the given node align with option 5's age range, gender, and education level, increasing the likelihood of a passive connection.""}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node is an actor with attributes matching option 6, so it's likely to be active in connecting with a similar node."",
+    ""1"": ""Option 2 has an event topic that doesn't match the actor type of the given node, making it unlikely for them to connect actively or passively."",
+    ""2"": ""The demographic and work-life attributes of the given node align with option 5's age range, gender, and education level, increasing the likelihood of a passive connection.""
+  }
+}
+```"
+236,642,"{'answer': ['No', 'Active', 'No', 'Passive'], 'reasons': {'0': ""The given node has different workstatue ('Freelancer') and educationlevel ('Undergraduate') compared to the option."", '1': ""The given node has different gender ('Male') and educationlevel ('Graduate') compared to the option."", '2': ""This event topic matches one of the past options' topics, and its format is suitable for a community or organization. The given node's attributes (age, gender, marrige, withkids, student) are not significantly different from the past options."", '3': ""The given node has different workstatue ('Employed') compared to the option.""}}","```json
+{
+  ""answer"": [""No"",""Active"",""No"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node has different workstatue ('Freelancer') and educationlevel ('Undergraduate') compared to the option."",
+    ""1"": ""The given node has different gender ('Male') and educationlevel ('Graduate') compared to the option."",
+    ""2"": ""This event topic matches one of the past options' topics, and its format is suitable for a community or organization. The given node's attributes (age, gender, marrige, withkids, student) are not significantly different from the past options."",
+    ""3"": ""The given node has different workstatue ('Employed') compared to the option.""
+  }
+}
+```"
+562,457,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node is an actor with a high school education and the new option is related to 'Culture And Arts' which is not directly related to the actor's profile."", '1': ""The given node is an actor with a high school education and the new option is related to 'Environment And Sustainability' which is the same as one of the similar nodes connected in the past, so it has a high possibility of active connection."", '3': ""The given node is an actor with a high school education and the new option is related to 'Lifestyle And Health', which is not directly related to the actor's profile, but since the actor lives in the neighborhood, it might be a passive connection.""}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node is an actor with a high school education and the new option is related to 'Culture And Arts' which is not directly related to the actor's profile."",
+    ""1"": ""The given node is an actor with a high school education and the new option is related to 'Environment And Sustainability' which is the same as one of the similar nodes connected in the past, so it has a high possibility of active connection."",
+    ""3"": ""The given node is an actor with a high school education and the new option is related to 'Lifestyle And Health', which is not directly related to the actor's profile, but since the actor lives in the neighborhood, it might be a passive connection.""
+  }
+}
+```"
+837,149,"{'answer': ['No', 'Passive'], 'reasons': {'Environment And Sustainability': ""The given node's profile indicates that they are interested in environment-related topics, as shown by their past connections. Although the options provided don't have a direct connection to 'Environment And Sustainability', it might be likely for them to passively engage with such content."", 'Technology And Education': ""This option does not match the given node's profile or past connections, so there is no possibility of active engagement. However, as a passive option, it might still be relevant for someone in their demographic or work-life context."", 'Community And Organization': ""The given node's profile doesn't show any direct interest in community-related topics. There's no strong connection to this category based on the information provided."", 'Culture And Arts': ""This option does not match the given node's profile or past connections, so there is no possibility of active engagement. However, as a passive option, it might still be relevant for someone in their demographic or work-life context.""}}","```json
+{
+  ""answer"": [""No"", ""Passive""],
+  ""reasons"": {
+    ""Environment And Sustainability"": ""The given node's profile indicates that they are interested in environment-related topics, as shown by their past connections. Although the options provided don't have a direct connection to 'Environment And Sustainability', it might be likely for them to passively engage with such content."",
+    ""Technology And Education"": ""This option does not match the given node's profile or past connections, so there is no possibility of active engagement. However, as a passive option, it might still be relevant for someone in their demographic or work-life context."",
+    ""Community And Organization"": ""The given node's profile doesn't show any direct interest in community-related topics. There's no strong connection to this category based on the information provided."",
+    ""Culture And Arts"": ""This option does not match the given node's profile or past connections, so there is no possibility of active engagement. However, as a passive option, it might still be relevant for someone in their demographic or work-life context.""
+  }
+}
+```"
+535,254,"{'answer': ['No', 'Active', 'Passive', 'No', 'Active', 'No', 'No', 'No', 'No'], 'reasons': {'0': ""The given option is from the past, and it doesn't match the current node's profile."", '1': 'This new option has similar attributes to a past connected node with Technology And Education topic, which is the same as the current node.', '2': 'Though not an exact match, the past connected node had Environment And Sustainability topic; this could be considered a related topic for Technology And Education.', '3': 'No direct connections or similarities found between this option and the given node.', '4': ""The topic of Community And Organization doesn't match the current node's profile."", '5': 'This new option has an eventtopic matching a past connected node with similar attributes to the current node, which might indicate a potential connection.'}}","```json
+{
+  ""answer"": [
+    ""No"", 
+    ""Active"", 
+    ""Passive"", 
+    ""No"", 
+    ""Active"", 
+    ""No"", 
+    ""No"", 
+    ""No"", 
+    ""No""
+  ],
+  ""reasons"": {
+    ""0"": ""The given option is from the past, and it doesn't match the current node's profile."",
+    ""1"": ""This new option has similar attributes to a past connected node with Technology And Education topic, which is the same as the current node."",
+    ""2"": ""Though not an exact match, the past connected node had Environment And Sustainability topic; this could be considered a related topic for Technology And Education."",
+    ""3"": ""No direct connections or similarities found between this option and the given node."",
+    ""4"": ""The topic of Community And Organization doesn't match the current node's profile."",
+    ""5"": ""This new option has an eventtopic matching a past connected node with similar attributes to the current node, which might indicate a potential connection.""
+  }
+}
+```"
+232,303,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node and option 0 have the same event topic 'Environment And Sustainability', making an active connection possible."", '4': ""The option's event topic 'Environment And Sustainability' is similar to the given node, but not exactly matching, making a passive connection more likely."", '7': ""The given node and option 7 have the same event topic 'Environment And Sustainability', making a passive connection more likely.""}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node and option 0 have the same event topic 'Environment And Sustainability', making an active connection possible."",
+    ""4"": ""The option's event topic 'Environment And Sustainability' is similar to the given node, but not exactly matching, making a passive connection more likely."",
+    ""7"": ""The given node and option 7 have the same event topic 'Environment And Sustainability', making a passive connection more likely.""
+  }
+}
+```
+
+```json
+{
+  ""answer"": [""No"",""Passive""],
+  ""reasons"": {
+    ""1"": ""The given node and option 1 have different event topics, but some demographic attributes are similar, making a passive connection possible."",
+    ""2"": ""The given node and option 2 have different event topics, but some demographic attributes are similar, making a passive connection possible.""
+  }
+}
+```
+
+```json
+{
+  ""answer"": [""No"",""Active""],
+  ""reasons"": {
+    ""3"": ""The given node and option 3 have different event topics, but the option's age range '35-55' is close to the given node's age range '18-35', making an active connection possible.""
+  }
+}
+```
+
+```json
+{
+  ""answer"": [""No"",""Passive""],
+  ""reasons"": {
+    ""5"": ""The option and given node have different event topics, but some demographic attributes are similar, making a passive connection more likely."",
+    ""6"": ""The option and given node have different event topics, but some demographic attributes are similar, making a passive connection possible.""
+  }
+}
+```"
+254,465,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': ""The given node's education level is Graduate, which is a higher level of education. This suggests that the node may be interested in topics related to Environment and Sustainability, as these topics often require advanced knowledge or skills."", '1': ""The given node's work status is Freelancer, which implies a high degree of autonomy and flexibility. The node's age (18-35) and marital status (No) also suggest that the node may be more likely to attend events related to Technology and Education."", '2': ""The given node's profile indicates that it has a strong connection to Community and Organization topics, as evidenced by the past connections (option_2:{'eventtopic': 'Community And Organization'}, option_3:{'eventtopic': 'Community And Organization'}).""}}","```json
+{
+  ""answer"": [""No"",""Active"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node's education level is Graduate, which is a higher level of education. This suggests that the node may be interested in topics related to Environment and Sustainability, as these topics often require advanced knowledge or skills."",
+    ""1"": ""The given node's work status is Freelancer, which implies a high degree of autonomy and flexibility. The node's age (18-35) and marital status (No) also suggest that the node may be more likely to attend events related to Technology and Education."",
+    ""2"": ""The given node's profile indicates that it has a strong connection to Community and Organization topics, as evidenced by the past connections (option_2:{'eventtopic': 'Community And Organization'}, option_3:{'eventtopic': 'Community And Organization'}).""
+  }
+}
+```"
+303,467,"{'answer': ['No', 'Active', 'Passive'], 'reasons': {'0': 'The given node has a different gender and education level than option 0.', '1': ""Option 1 has the same topic as another similar node connected in the past, which is environment and sustainability. However, there's no direct connection to the given node based on the provided context."", '2': ""This option has the same demographic characteristics as the given node, but it also doesn't have a strong connection with other similar nodes in the past.""}}","```json
+{
+  ""answer"": [""No"",""Active"", ""Passive""],
+  ""reasons"": {
+    ""0"": ""The given node has a different gender and education level than option 0."",
+    ""1"": ""Option 1 has the same topic as another similar node connected in the past, which is environment and sustainability. However, there's no direct connection to the given node based on the provided context."",
+    ""2"": ""This option has the same demographic characteristics as the given node, but it also doesn't have a strong connection with other similar nodes in the past.""
+  }
+}
+```"

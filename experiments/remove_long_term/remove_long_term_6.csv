@@ -1,0 +1,20 @@
+,node,llm_choice,llm_response
+254,910,"{'answer': ['Active', 'Passive'], 'reasons': {'option_1': ""The given node and option_1 have the same 'eventtopic' which is a strong indicator of past connections."", 'option_2': ""Option_2 has the same 'eventtopic' as a similar node connected in the past to the given node.""}}","```json
+{
+  ""answer"": [""Active"", ""Passive""],
+  ""reasons"": {
+    ""option_1"": ""The given node and option_1 have the same 'eventtopic' which is a strong indicator of past connections."",
+    ""option_2"": ""Option_2 has the same 'eventtopic' as a similar node connected in the past to the given node.""
+  }
+}
+```"
+303,991,"{'answer': ['Active', 'No', 'Passive'], 'reasons': {'0': 'The new option has the same event topic as one of the past options (option_1), so it is likely to have an active connection.', '1': ""This option does not share any similarity with past connections, making a connection unlikely ('No')."", '2': ""Although this option's event topic is different from the given node, it shares some similarities with past connections in terms of its general categories (Culture And Arts), suggesting a passive connection.""}}","```json
+{
+  ""answer"": [""Active"",""No"",""Passive""],
+  ""reasons"": {
+    ""0"": ""The new option has the same event topic as one of the past options (option_1), so it is likely to have an active connection."",
+    ""1"": ""This option does not share any similarity with past connections, making a connection unlikely ('No')."",
+    ""2"": ""Although this option's event topic is different from the given node, it shares some similarities with past connections in terms of its general categories (Culture And Arts), suggesting a passive connection.""
+  }
+}
+```"
